@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dyslexia-Friendly Reading Assistant</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Reading Assistant</h1>
+        
+        <div class="setting-group">
+            <label class="switch">
+                <input type="checkbox" id="enableToggle">
+                <span class="slider round"></span>
+            </label>
+            <span class="setting-label">Enable Extension</span>
+        </div>
+
+        <div class="settings-section">
+            <div class="setting-group">
+                <label for="fontSize">Font Size (px):</label>
+                <input type="number" id="fontSize" min="12" max="32" step="1">
+            </div>
+
+            <div class="setting-group">
+                <label for="lineSpacing">Line Spacing:</label>
+                <input type="number" id="lineSpacing" min="1" max="3" step="0.1">
+            </div>
+
+            <div class="setting-group">
+                <label for="fontFamily">Font:</label>
+                <select id="fontFamily">
+                    <option value="OpenDyslexic">OpenDyslexic</option>
+                    <option value="Arial">Arial</option>
+                    <option value="Comic Sans MS">Comic Sans MS</option>
+                </select>
+            </div>
+
+            <div class="setting-group">
+                <label for="backgroundColor">Background Color:</label>
+                <input type="color" id="backgroundColor">
+            </div>
+
+            <div class="setting-group">
+                <label for="textColor">Text Color:</label>
+                <input type="color" id="textColor">
+            </div>
+
+            <div class="setting-group">
+                <label for="wordSpacing">Word Spacing:</label>
+                <input type="range" id="wordSpacing" min="0" max="10" step="1">
+            </div>
+
+            <div class="setting-group">
+                <label for="focusMode">Focus Mode:</label>
+                <input type="checkbox" id="focusMode">
+            </div>
+        </div>
+
+        <div class="preview-section">
+            <h3>Preview</h3>
+            <div id="previewText">
+                The quick brown fox jumps over the lazy dog.
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button id="readAloud" class="button">Read Aloud</button>
+            <button id="resetButton" class="button">Reset Settings</button>
+        </div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>
