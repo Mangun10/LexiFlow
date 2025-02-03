@@ -1,74 +1,300 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Dyslexia-Friendly Reading Assistant</title>
-    <link rel="stylesheet" href="popup.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LexiFlow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-light: #BAD8B6;
+            --primary-dark: #8D77AB;
+            --background: #F9F6E6;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --text: #333;
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 350px;
+            font-family: 'Atkinson Hyperlegible', sans-serif;
+            background-color: white;
+            padding: 16px;
+            color: var(--text);
+            padding-left: 30px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .lexi { color: var(--primary-light); }
+        .flow { color: var(--primary-dark); }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, var(--primary-light), var(--primary-dark));
+            -webkit-background-clip: text;
+            color: transparent;
+            font-size: 20px;
+        }
+
+        .theme-toggle {
+            display: flex;
+            background: var(--background);
+            padding: 2px;
+            border-radius: 20px;
+        }
+
+        .theme-toggle button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 16px;
+            background: none;
+            font-family: inherit;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        .theme-toggle button.active {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .settings-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .setting-card {
+            background: var(--background);
+            padding: 16px;
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(10px);
+        }
+
+        .setting-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .value {
+            color: var(--primary-dark);
+            font-weight: bold;
+        }
+
+        .slider-container {
+            position: relative;
+            height: 5px;
+            background: #e0e0e0;
+            border-radius: 5px;
+        }
+
+        .slider {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            appearance: none;
+            background: transparent;
+            z-index: 2;
+        }
+
+        .slider-progress {
+            position: absolute;
+            height: 100%;
+            background: linear-gradient(to right, var(--primary-light), var(--primary-dark));
+            border-radius: 2px;
+            pointer-events: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            border: 2px solid var(--primary-dark);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .font-select {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background: white;
+            font-family: inherit;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        .color-picker-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .color-picker {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            padding: 0;
+            background: none;
+        }
+
+        .preview-box {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            min-height: 60px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .apply-button, .cancel-button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+        }
+
+        .apply-button {
+            background: var(--primary-dark);
+            color: white;
+        }
+
+        .cancel-button {
+            background: var(--primary-light);
+            color: var(--text);
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+    </style>
+    <script src="popup.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>Reading Assistant</h1>
-        
-        <div class="setting-group">
-            <label class="switch">
-                <input type="checkbox" id="enableToggle">
-                <span class="slider round"></span>
-            </label>
-            <span class="setting-label">Enable Extension</span>
+        <h1 class="logo"><span class="lexi">Lexi</span><span class="flow">Flow</span></h1>
+
+        <div class="header">
+            <h2 class="gradient-text">Reading Settings</h2>
+            <div class="theme-toggle">
+                <button class="active">Light</button>
+                <button>Dark</button>
+            </div>
         </div>
 
-        <div class="settings-section">
-            <div class="setting-group">
-                <label for="fontSize">Font Size (px):</label>
-                <input type="number" id="fontSize" min="12" max="32" step="1">
+        <div class="settings-container">
+            <div class="setting-card">
+                <div class="setting-header">
+                    <span>Font Size</span>
+                    <span class="value">16px</span>
+                </div>
+                <div class="slider-container">
+                    <input type="range" min="12" max="32" value="16" class="slider">
+                    <div class="slider-progress"></div>
+                </div>
             </div>
 
-            <div class="setting-group">
-                <label for="lineSpacing">Line Spacing:</label>
-                <input type="number" id="lineSpacing" min="1" max="3" step="0.1">
+            <div class="setting-card">
+                <div class="setting-header">
+                    <span>Line Spacing</span>
+                    <span class="value">1.5</span>
+                </div>
+                <div class="slider-container">
+                    <input type="range" min="1" max="3" step="0.1" value="1.5" class="slider">
+                    <div class="slider-progress"></div>
+                </div>
             </div>
 
-            <div class="setting-group">
-                <label for="fontFamily">Font:</label>
-                <select id="fontFamily">
+            <div class="setting-card">
+                <div class="setting-header">
+                    <span>Word Spacing</span>
+                    <span class="value">2px</span>
+                </div>
+                <div class="slider-container">
+                    <input type="range" min="0" max="10" value="2" class="slider">
+                    <div class="slider-progress"></div>
+                </div>
+            </div>
+
+            <div class="setting-card">
+                <div class="setting-header">
+                    <span>Choose Font</span>
+                </div>
+                <select class="font-select">
                     <option value="OpenDyslexic">OpenDyslexic</option>
-                    <option value="Arial">Arial</option>
-                    <option value="Comic Sans MS">Comic Sans MS</option>
+                    <option value="Atkinson Hyperlegible">Atkinson Hyperlegible</option>
                 </select>
             </div>
 
-            <div class="setting-group">
-                <label for="backgroundColor">Background Color:</label>
-                <input type="color" id="backgroundColor">
+            <div class="setting-card">
+                <div class="setting-header">
+                    <span>Background Color</span>
+                </div>
+                <div class="color-picker-container">
+                    <input type="color" value="#F9F6E6" class="color-picker">
+                </div>
             </div>
 
-            <div class="setting-group">
-                <label for="textColor">Text Color:</label>
-                <input type="color" id="textColor">
+            <div class="setting-card">
+                <div class="setting-header">
+                    <span>Text Color</span>
+                </div>
+                <div class="color-picker-container">
+                    <input type="color" value="#333333" class="color-picker">
+                </div>
             </div>
 
-            <div class="setting-group">
-                <label for="wordSpacing">Word Spacing:</label>
-                <input type="range" id="wordSpacing" min="0" max="10" step="1">
-            </div>
-
-            <div class="setting-group">
-                <label for="focusMode">Focus Mode:</label>
-                <input type="checkbox" id="focusMode">
+            <div class="setting-card">
+                <div class="setting-header">
+                    <span>Preview</span>
+                </div>
+                <div class="preview-box">
+                    The quick brown fox jumps over the lazy dog.
+                </div>
             </div>
         </div>
 
-        <div class="preview-section">
-            <h3>Preview</h3>
-            <div id="previewText">
-                The quick brown fox jumps over the lazy dog.
-            </div>
-        </div>
-
-        <div class="button-group">
-            <button id="readAloud" class="button">Read Aloud</button>
-            <button id="resetButton" class="button">Reset Settings</button>
+        <div class="action-buttons">
+            <button class="apply-button">Apply</button>
+            <button class="cancel-button">Cancel</button>
         </div>
     </div>
-    <script src="popup.js"></script>
-</body>
-</html>
