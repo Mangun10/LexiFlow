@@ -6,13 +6,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const sliders = document.querySelectorAll('.slider');
     const themeButtons = document.querySelectorAll('.theme-toggle button');
-    const previewBox = document.querySelector('.preview-box');
-    const fontSelect = document.querySelector('.font-select');
+    const previewBox = document.getElementById('preview-box');
+    const fontSelect = document.getElementById('font-select');
     const backgroundPicker = document.querySelectorAll('.color-picker')[0];
     const textColorPicker = document.querySelectorAll('.color-picker')[1];
-    const applyButton = document.querySelector('.apply-button');
-    const cancelButton = document.querySelector('.cancel-button');
-    const resetButton = document.getElementById('resetButton');
+    const applyButton = document.getElementById('apply-button');
+    const cancelButton = document.getElementById('cancel-button');
+    // const resetButton = document.getElementById('resetButton');
 
     const updateSlider = (e) => {
         const value = e.target.value;
@@ -27,8 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Update progress bar
         const progressBar = e.target.nextElementSibling;
-        progressBar.style.width = `${progress}%`;
-        console.log('Progress bar width set to:', `${progress}%`);
+        progressBar.style.width = '${progress}%';
+        console.log('Progress bar width set to:', '${progress}%');
 
         // Update value display
         const valueDisplay = e.target.parentElement.parentElement.querySelector('.value');
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
         slider.addEventListener('input', updateSlider);
         console.log('Added input event listener to slider:', slider);
     });
-
+    
     themeButtons.forEach(button => {
         button.addEventListener('click', () => {
             console.log('Theme button clicked:', button);
@@ -103,8 +103,8 @@ document.addEventListener('DOMContentLoaded', function() {
         fontSize: '16',
         lineSpacing: '1.5',
         fontFamily: 'OpenDyslexic',
-        backgroundColor: '#FFFFF0',
-        textColor: '#000000',
+        backgroundColor: '#000',
+        textColor: '#fff',
         wordSpacing: '0.1em',
         focusMode: false,
         isEnabled: true
@@ -113,12 +113,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         document.getElementById('fontSize').value = settings.fontSize;
         document.getElementById('lineSpacing').value = settings.lineSpacing;
-        document.getElementById('fontFamily').value = settings.fontFamily;
+        document.getElementById('font-select').value = settings.fontFamily;
         document.getElementById('backgroundColor').value = settings.backgroundColor;
         document.getElementById('textColor').value = settings.textColor;
         document.getElementById('wordSpacing').value = settings.wordSpacing;
-        document.getElementById('focusMode').checked = settings.focusMode;
-        document.getElementById('enableToggle').checked = settings.isEnabled;
+        // document.getElementById('focusMode').checked = settings.focusMode;
+        // document.getElementById('enableToggle').checked = settings.isEnabled;
 
         console.log("Updated UI elements with settings");
         updatePreview(settings);
@@ -130,11 +130,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const settings = {
             fontSize: document.getElementById('fontSize').value,
             lineSpacing: document.getElementById('lineSpacing').value,
-            fontFamily: document.getElementById('fontFamily').value,
+            fontFamily: document.getElementById('font-select').value,
             backgroundColor: document.getElementById('backgroundColor').value,
             textColor: document.getElementById('textColor').value,
             wordSpacing: document.getElementById('wordSpacing').value,
-            focusMode: document.getElementById('focusMode').checked,
+            // focusMode: document.getElementById('focusMode').checked,
             isEnabled: document.getElementById('enableToggle').checked
         };
 
@@ -161,8 +161,8 @@ document.addEventListener('DOMContentLoaded', function() {
             fontSize: '16',
             lineSpacing: '1.5',
             fontFamily: 'OpenDyslexic',
-            backgroundColor: '#FFFFF0',
-            textColor: '#000000',
+            backgroundColor: '#000',
+            textColor: '#fff',
             wordSpacing: '0.1em',
             focusMode: false,
             isEnabled: true
@@ -172,11 +172,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         document.getElementById('fontSize').value = defaultSettings.fontSize;
         document.getElementById('lineSpacing').value = defaultSettings.lineSpacing;
-        document.getElementById('fontFamily').value = defaultSettings.fontFamily;
+        document.getElementById('font-select').value = defaultSettings.fontFamily;
         document.getElementById('backgroundColor').value = defaultSettings.backgroundColor;
         document.getElementById('textColor').value = defaultSettings.textColor;
         document.getElementById('wordSpacing').value = defaultSettings.wordSpacing;
-        document.getElementById('focusMode').checked = defaultSettings.focusMode;
+        // document.getElementById('focusMode').checked = defaultSettings.focusMode;
         document.getElementById('enableToggle').checked = defaultSettings.isEnabled;
 
         console.log("UI elements updated with default settings");
@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const updatePreview = (settings) => {
         console.log("updatePreview function called with settings:", settings);
 
-        const previewText = document.getElementById('previewText');
+        const previewText = document.getElementById('preview-box');
         if (previewText) {
             previewText.style.fontSize = settings.fontSize + 'px';
             previewText.style.lineHeight = settings.lineSpacing;
@@ -212,32 +212,43 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    const toggleFocusMode = () => {
-        console.log("toggleFocusMode function called");
+    // const toggleFocusMode = () => {
+    //     console.log("toggleFocusMode function called");
 
-        const isEnabled = document.getElementById('focusMode').checked;
-        console.log(`Focus mode ${isEnabled ? 'enabled' : 'disabled'}`);
+    //     const isEnabled = document.getElementById('focusMode').checked;
+    //     console.log(Focus mode ${isEnabled ? 'enabled' : 'disabled'});
 
-        chrome.storage.sync.set({ focusMode: isEnabled }, function() {
-            console.log("Focus mode setting saved to storage");
+    //     chrome.storage.sync.set({ focusMode: isEnabled }, function() {
+    //         console.log("Focus mode setting saved to storage");
 
-            chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-                console.log("Sending message to content script to toggle focus mode");
-                chrome.tabs.sendMessage(tabs[0].id, {
-                    action: 'toggleFocusMode',
-                    enabled: isEnabled
-                });
-            });
-        });
-    };
+    //         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    //             console.log("Sending message to content script to toggle focus mode");
+    //             chrome.tabs.sendMessage(tabs[0].id, {
+    //                 action: 'toggleFocusMode',
+    //                 enabled: isEnabled
+    //             });
+    //         });
+    //     });
+    // };
 
     document.getElementById('fontSize').addEventListener('change', saveSettings);
     document.getElementById('lineSpacing').addEventListener('change', saveSettings);
-    document.getElementById('fontFamily').addEventListener('change', saveSettings);
+    document.getElementById('font-select').addEventListener('change', saveSettings);
     document.getElementById('backgroundColor').addEventListener('change', saveSettings);
     document.getElementById('textColor').addEventListener('change', saveSettings);
     document.getElementById('wordSpacing').addEventListener('change', saveSettings);
-    document.getElementById('focusMode').addEventListener('change', toggleFocusMode);
+    // document.getElementById('focusMode').addEventListener('change', toggleFocusMode);
     document.getElementById('enableToggle').addEventListener('change', saveSettings);
-    resetButton.addEventListener('click', resetSettings);
+    // resetButton.addEventListener('click', resetSettings);
+
+    
+    const themeButton = document.querySelectorAll('.theme-toggle-two button');
+    themeButton.forEach(button => {
+        button.addEventListener('click', () => {
+            themeButton.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+        });
+    });
+
 });

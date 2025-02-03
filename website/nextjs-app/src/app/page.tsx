@@ -138,15 +138,15 @@ export default function LandingPage() {
             <span className="text-[#8D77AB]">Flow</span>
           </div>
           <div className="flex items-center gap-8">
-            <Link href="#features" className="text-gray-700 hover:text-[#8D77AB] transition-colors">
+            {/* <Link href="#features" className="text-gray-700 hover:text-[#8D77AB] transition-colors">
               Features
-            </Link>
+            </Link> */}
             <Link href="/about" className="text-gray-700 hover:text-[#8D77AB] transition-colors">
               About
             </Link>
-            <Link href="#contact" className="text-gray-700 hover:text-[#8D77AB] transition-colors">
+            {/* <Link href="#contact" className="text-gray-700 hover:text-[#8D77AB] transition-colors">
               Contact
-            </Link>
+            </Link> */}
             <Link href="/login">
                 <Button className="bg-[#8D77AB] text-white hover:bg-[#8D77AB]/90">Get Started</Button>
           </Link>

@@ -8,8 +8,11 @@ XGBOOST_PARAMS = {
     'learning_rate': 0.1,
     'n_estimators': 100,
     'tree_method': 'hist',
-    'device': 'cuda'
+    'objective': 'multi:softmax',
+    'num_class': 5,  # Number of difficulty levels
+    'eval_metric': 'mlogloss'
 }
+
 
 BERT_PARAMS = {
     'num_labels': 5,  # Reading difficulty levels

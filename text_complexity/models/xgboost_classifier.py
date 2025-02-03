@@ -9,13 +9,15 @@ class XGBoostReadabilityClassifier:
         self.explainer = None
     
     def train(self, X, y):
+        # Split data
         X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2)
         
+        # Train with early stopping using eval_set
         self.model.fit(
             X_train, 
             y_train,
             eval_set=[(X_val, y_val)],
-            early_stopping_rounds=10
+            verbose=True
         )
         
         # Initialize SHAP explainer
