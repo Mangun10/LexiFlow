@@ -1,5 +1,5 @@
-import sys
 from pathlib import Path
+import sys
 sys.path.append(str(Path(__file__).parent))
 
 from config.model_config import MODEL_CONFIG
@@ -7,7 +7,7 @@ from models.mistral_simplifier import TextSimplifier
 
 def main():
     try:
-        print("Initializing text simplifier...")
+        print("Initializing LexiFlow text simplifier...")
         simplifier = TextSimplifier(MODEL_CONFIG)
         
         # Test simplification

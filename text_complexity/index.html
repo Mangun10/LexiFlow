@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="./lib/lz-string.min.js"></script>
+  <script src="./analytics/user-analytics.js"></script>
+  <script src="./analytics/adaptive-ui.js"></script>
+</head>
+<body class="dyslexia-friendly">
+  <script>
+    // Initialize analytics
+    const tracker = new ReadingMetricsTracker();
+    const analyticsDB = new AnalyticsDB();
+    const cssManager = new AdaptiveCSSManager().init();
+
+    function handleQuizCompletion(score) {
+      tracker.quizScores.push(score);
+      
+      // Save metrics every 5 minutes
+      setInterval(async () => {
+        const metrics = tracker.getMetrics();
+        await analyticsDB.saveMetrics(metrics);
+      }, 300000);
+    }
+  </script>
+</body>
+</html>
