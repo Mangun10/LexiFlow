@@ -1,6 +1,6 @@
 # LexiFlow
 
-Dyslexia-Friendly AI Reading Coach: Empowering Inclusive Web Browsing
+LexiFlow is a browser extension that assists dyslexic readers by dynamically restructuring web text simplifying complex sentences with an AI-driven pipeline. The project leverages the Chrome Extensions API, React for the UI, and JS frameworks such as WebGazer.js for webcam-based eye-tracking and Tesseract.js for OCR. The text simplification engine utilizes a Mistral-7B-based model via HuggingFace's pipeline and a fine-tuned Whisper model, with additional support from TensorFlow.js and ONNX for local inference.
 
 ## Core Functionality
 
